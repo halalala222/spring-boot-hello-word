@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: ${APPLICATION_ENC:dev}
+    active: ${ENC:dev}
 ---
 person:
   name: prod-liooooo
