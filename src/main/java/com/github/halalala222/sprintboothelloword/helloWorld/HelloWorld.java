@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author : halalala222
  * @version : 1.0
- * @Project : sprint-boot-hello-word
- * @Package : com.github.halalala222.sprintboothelloword.helloWorld
- * @ClassName : HelloWorld.java
- * @createTime : 2023/5/28 22:59
- * @Email : 1741196223@qq.com
- * @Description :
  */
 
 @RestController
