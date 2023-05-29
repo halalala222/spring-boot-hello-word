@@ -1,0 +1,26 @@
+server:
+  port: 8000
+---
+person:
+  name: prod-liooooo
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+---
+person:
+  name: dev-liooooo
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+---
+person:
+  name: test-liooooo
+
+spring:
+  config:
+    activate:
+      on-profile: test
