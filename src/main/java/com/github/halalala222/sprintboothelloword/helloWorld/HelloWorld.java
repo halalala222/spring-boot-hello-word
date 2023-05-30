@@ -1,6 +1,8 @@
 package com.github.halalala222.sprintboothelloword.helloWorld;
 
 import com.github.halalala222.sprintboothelloword.config.AppConfig;
+import com.github.halalala222.sprintboothelloword.handler.BaseException;
+import com.github.halalala222.sprintboothelloword.handler.ResponseCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,14 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/hello")
 
 public class HelloWorld {
-    private final AppConfig config;
-
-    public HelloWorld(AppConfig config) {
-        this.config = config;
-    }
-
     @GetMapping
     public String hello() {
-        return config.getName();
+        throw new BaseException(ResponseCode.SERVICE_ERROR);
     }
 }
