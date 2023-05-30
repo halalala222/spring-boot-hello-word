@@ -11,19 +11,17 @@ import lombok.Getter;
 @Getter
 public enum ResponseHttpStatusCode {
 
-    STATUS_OK(200, "success"),
-    STATUS_AUTH_ERROR(401, "auth error"),
-    STATUS_FORBIDDEN_ERROR(403, "forbidden"),
-    STATUS_REQUEST_ERROR(400, "request error"),
-    STATUS_INTERNAL_ERROR(500, "internal error");
+    STATUS_OK(200),
+    STATUS_AUTH_ERROR(401),
+    STATUS_FORBIDDEN_ERROR(403),
+    STATUS_BAD_REQUEST_ERROR(400),
+    STATUS_INTERNAL_ERROR(500);
 
     private final int httpStatusCode;
 
-    private final String message;
 
-    ResponseHttpStatusCode(int httpStatusCode, String message) {
+    ResponseHttpStatusCode(int httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
-        this.message = message;
     }
 
 }
