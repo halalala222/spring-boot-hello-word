@@ -9,6 +9,7 @@ from read config -> http response -> log -> jwt -> orm -> cache
 
 * read config
 * http response
+* log
 
 # use
 
@@ -18,7 +19,6 @@ from read config -> http response -> log -> jwt -> orm -> cache
 
 # todo
 
-* log
 * orm(mysql)
 * jwt
 * cache(redis)
