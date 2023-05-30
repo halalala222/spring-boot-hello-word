@@ -1,8 +1,12 @@
 package com.github.halalala222.sprintboothelloword.handler;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response<Void> error(Exception e) {
         e.printStackTrace();
         return Response.serviceError();
@@ -21,15 +26,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
     @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response<Void> error(NullPointerException e) {
         e.printStackTrace();
         return Response.serviceError();
     }
 
     @ExceptionHandler(BaseException.class)
-    @ResponseBody
-    public Response<Void> error(BaseException e) {
+    public ResponseEntity<Response<Void>> error(BaseException e) {
         e.printStackTrace();
-        return Response.errorWithCode(e.getCode());
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        ResponseCode code = e.getCode();
+        if (code.getCode() == ResponseCode.JWT_ERROR.getCode()) {
+            httpStatus = HttpStatus.UNAUTHORIZED;
+        }
+        if (code.getCode() == ResponseCode.SERVICE_ERROR.getCode()) {
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return ResponseEntity.status(httpStatus).body(Response.errorWithCode(code));
     }
 }
