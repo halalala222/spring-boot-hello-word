@@ -12,8 +12,8 @@ import lombok.Getter;
 public enum ResponseCode {
     OK(1, "ok"),
     SERVICE_ERROR(2, "internal error"),
-    JWT_ERROR(1001, "token error");
-
+    JWT_ERROR(1001, "token error"),
+    USER_NOT_FOUND_ERROR(1002, "user not found");
     private final int code;
     private final String message;
 
