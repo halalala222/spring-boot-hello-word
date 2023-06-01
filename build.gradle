@@ -21,7 +21,7 @@ dependencies {
     implementation 'com.sun.xml.bind:jaxb-impl:4.0.2'
     implementation 'com.sun.xml.bind:jaxb-core:4.0.2'
     implementation 'javax.activation:activation:1.1.1'
-    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'com.google.code.gson:gson:2.8.9'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
