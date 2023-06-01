@@ -62,7 +62,7 @@ public class JwtUtils {
 
     public String getTokenFromRequestHeader(HttpServletRequest request) throws BaseException {
         String authHeader = request.getHeader("Authorization");
-        if (!authHeader.isBlank() && authHeader.startsWith("Bearer")) {
+        if (!(authHeader == null) && !authHeader.isBlank() && authHeader.startsWith("Bearer")) {
             return authHeader.substring(7);
         } else {
             throw new BaseException(ResponseCode.JWT_ERROR);
