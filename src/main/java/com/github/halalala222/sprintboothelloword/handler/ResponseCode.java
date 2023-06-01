@@ -1,8 +1,6 @@
 package com.github.halalala222.sprintboothelloword.handler;
 
 import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created with IntelliJ IDEA.
  *
