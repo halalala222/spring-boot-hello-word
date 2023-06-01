@@ -30,7 +30,7 @@ public class Response<T> {
         return new Response<>(code, message, data);
     }
 
-    public static Response<Void> successWithoutData() {
+    public static <T> Response<T> successWithoutData() {
         return Response.of(ResponseCode.OK.getCode(), ResponseCode.OK.getMessage(), null);
     }
 
@@ -39,11 +39,11 @@ public class Response<T> {
         return Response.of(ResponseCode.OK.getCode(), ResponseCode.OK.getMessage(), data);
     }
 
-    public static Response<Void> serviceError() {
+    public static <T> Response<T> serviceError() {
         return Response.of(ResponseCode.SERVICE_ERROR.getCode(), ResponseCode.SERVICE_ERROR.getMessage(), null);
     }
 
-    public static Response<Void> errorWithCode(ResponseCode code) {
+    public static <T> Response<T> errorWithCode(ResponseCode code) {
         return Response.of(code.getCode(), code.getMessage(), null);
     }
 }
