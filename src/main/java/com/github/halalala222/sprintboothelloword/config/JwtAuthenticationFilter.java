@@ -1,24 +1,14 @@
 package com.github.halalala222.sprintboothelloword.config;
 
-import com.fasterxml.jackson.core.filter.FilteringGeneratorDelegate;
-import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 import com.github.halalala222.sprintboothelloword.handler.BaseException;
-import com.github.halalala222.sprintboothelloword.handler.ResponseCode;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
-import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
