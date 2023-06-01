@@ -15,7 +15,8 @@ public enum ResponseCode {
     SERVICE_ERROR(2, "internal error"),
     JWT_ERROR(1001, "token error"),
     USER_NOT_FOUND_ERROR(1002, "user not found"),
-    USER_UN_AUTHORIZATION(1003,"auth error");
+    USER_UN_AUTHORIZATION(1003, "auth error"),
+    REQUEST_DATA_ERROR(1004, "请求参数错误");
     private final int code;
     private final String message;
 
