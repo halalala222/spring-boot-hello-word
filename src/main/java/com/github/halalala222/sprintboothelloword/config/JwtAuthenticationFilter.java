@@ -23,9 +23,15 @@ import java.util.Map;
 @Slf4j
 @Component
 public class JwtAuthenticationFilter implements HandlerInterceptor {
+
+    private final JwtUtils jwtUtils;
+
+    public JwtAuthenticationFilter(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        JwtUtils jwtUtils = new JwtUtils();
         try {
             String token = jwtUtils.getTokenFromRequestHeader(request);
             if (jwtUtils.validateToken(token)) {
