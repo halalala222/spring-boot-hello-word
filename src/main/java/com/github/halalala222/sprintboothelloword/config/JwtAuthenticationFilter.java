@@ -2,9 +2,11 @@ package com.github.halalala222.sprintboothelloword.config;
 
 import com.github.halalala222.sprintboothelloword.handler.BaseException;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
+import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -33,12 +35,14 @@ public class JwtAuthenticationFilter implements HandlerInterceptor {
         } catch (BaseException e) {
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("message", e.getMessage());
-            responseData.put("data", null);
-            responseData.put("code", e.getCode());
+            responseData.put("data", "");
+            responseData.put("code", e.getCode().getCode());
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
-            response.getOutputStream().write(responseData.toString().getBytes(StandardCharsets.UTF_8));
+            Gson gson = new Gson();
+            String responseStringData = gson.toJson(responseData);
+            response.getOutputStream().write(responseStringData.getBytes(StandardCharsets.UTF_8));
             return false;
         }
         return false;
