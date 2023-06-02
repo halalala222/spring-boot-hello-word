@@ -17,6 +17,11 @@ spring:
   config:
     activate:
       on-profile: prod
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
 ---
 person:
   name: dev-liooooo
@@ -25,6 +30,11 @@ spring:
   config:
     activate:
       on-profile: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: dev
+    password: dev
+    driver-class-name: com.mysql.jdbc.Driver
 ---
 person:
   name: test-liooooo
@@ -33,3 +43,8 @@ spring:
   config:
     activate:
       on-profile: test
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    username: test
+    password: test
+    driver-class-name: com.mysql.jdbc.Driver
