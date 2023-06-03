@@ -1,8 +1,8 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
-import com.github.halalala222.sprintboothelloword.handler.BaseException;
+import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
-import com.github.halalala222.sprintboothelloword.handler.ResponseCode;
+import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import org.springframework.web.bind.annotation.*;
 

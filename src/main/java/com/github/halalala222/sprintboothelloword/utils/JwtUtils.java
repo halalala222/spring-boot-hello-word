@@ -1,7 +1,7 @@
 package com.github.halalala222.sprintboothelloword.utils;
 
-import com.github.halalala222.sprintboothelloword.handler.BaseException;
-import com.github.halalala222.sprintboothelloword.handler.ResponseCode;
+import com.github.halalala222.sprintboothelloword.exception.BaseException;
+import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

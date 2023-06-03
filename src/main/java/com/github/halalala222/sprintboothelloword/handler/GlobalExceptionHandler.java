@@ -1,5 +1,7 @@
 package com.github.halalala222.sprintboothelloword.handler;
 
+import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
+import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

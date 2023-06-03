@@ -1,4 +1,4 @@
-package com.github.halalala222.sprintboothelloword.handler;
+package com.github.halalala222.sprintboothelloword.constants;
 
 import lombok.Getter;
 /**

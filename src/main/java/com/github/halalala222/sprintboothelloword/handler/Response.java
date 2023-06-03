@@ -1,5 +1,6 @@
 package com.github.halalala222.sprintboothelloword.handler;
 
+import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.github.halalala222.sprintboothelloword.config;
 
-import com.github.halalala222.sprintboothelloword.handler.BaseException;
+import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;

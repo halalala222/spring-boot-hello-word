@@ -1,7 +1,7 @@
 package com.github.halalala222.sprintboothelloword.helloWorld;
 
-import com.github.halalala222.sprintboothelloword.handler.BaseException;
-import com.github.halalala222.sprintboothelloword.handler.ResponseCode;
+import com.github.halalala222.sprintboothelloword.exception.BaseException;
+import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
