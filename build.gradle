@@ -29,6 +29,7 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.33'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation 'org.apache.commons:commons-pool2:2.11.1'
 }
 
 tasks.named('test') {
