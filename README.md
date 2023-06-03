@@ -11,6 +11,8 @@ from read config -> http response -> log -> jwt -> orm -> cache
 * http response
 * log
 * jwt
+* mybatis-plus connection & simple get data from database
+* redis connection & simple set data (key value dataStruct)
 
 # use
 
@@ -20,5 +22,4 @@ from read config -> http response -> log -> jwt -> orm -> cache
 
 # todo
 
-* orm(mysql)
-* cache(redis)
+* mybatis & redis to build a simple web server
