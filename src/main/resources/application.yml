@@ -27,6 +27,11 @@ spring:
       host: localhost
       port: 6379
       database: 0
+      jedis:
+        pool:
+          max-idle: 16
+          max-active: 32
+          min-idle: 8
 ---
 person:
   name: dev-liooooo
@@ -45,6 +50,11 @@ spring:
       host: localhost
       port: 6379
       database: 1
+      jedis:
+        pool:
+          max-idle: 16
+          max-active: 32
+          min-idle: 8
 ---
 person:
   name: test-liooooo
@@ -63,3 +73,8 @@ spring:
       host: localhost
       port: 6379
       database: 1
+      jedis:
+        pool:
+          max-idle: 16
+          max-active: 32
+          min-idle: 8
