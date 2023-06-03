@@ -22,6 +22,11 @@ spring:
     username: root
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
 ---
 person:
   name: dev-liooooo
@@ -35,6 +40,11 @@ spring:
     username: dev
     password: dev
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 1
 ---
 person:
   name: test-liooooo
@@ -48,3 +58,8 @@ spring:
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 1
