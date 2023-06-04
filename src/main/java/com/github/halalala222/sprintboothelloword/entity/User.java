@@ -29,7 +29,9 @@ public class User {
     private String email;
     @TableField("password")
     private String password;
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
