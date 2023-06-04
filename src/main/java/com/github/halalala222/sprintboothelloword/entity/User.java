@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,11 +30,11 @@ public class User {
     private String email;
     @TableField("password")
     private String password;
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createdAt;
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
+    @TableField(fill = FieldFill.INSERT, value = "created_at")
+    private Date createdAt;
+    @TableField(fill = FieldFill.INSERT_UPDATE, value = "updated_at")
+    private Date updatedAt;
+    private Date deletedAt;
 
     public static String getIdFiled() {
         return "id";
