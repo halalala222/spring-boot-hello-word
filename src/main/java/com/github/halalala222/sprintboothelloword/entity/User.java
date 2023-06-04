@@ -26,6 +26,8 @@ public class User {
     private String signature;
     @TableField("email")
     private String email;
+    @TableField("password")
+    private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
