@@ -8,10 +8,10 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 @EnableCaching
 @MapperScan("com.github.halalala222.sprintboothelloword.mapper")
-public class SprintBootHelloWordApplication {
+public class SpringBootHelloWordApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SprintBootHelloWordApplication.class, args);
+        SpringApplication.run(SpringBootHelloWordApplication.class, args);
     }
 
 
