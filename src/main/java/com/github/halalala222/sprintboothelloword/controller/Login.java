@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/login")
 public class Login {
-    JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
     public Login(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
