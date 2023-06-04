@@ -7,6 +7,9 @@ import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -23,7 +26,7 @@ public class Login {
     }
 
     @PostMapping
-    public Response<String> LoginController(@RequestBody LoginUser user) throws BaseException {
+    public Response<Map<String, String>> LoginController(@RequestBody LoginUser user) throws BaseException {
         if (user.getUserName() == null || user.getPassword() == null) {
             throw new BaseException(ResponseCode.REQUEST_DATA_ERROR);
         }
@@ -31,7 +34,9 @@ public class Login {
             throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
         }
         String token = jwtUtils.generateToken(1L);
-        return Response.successWithData(token);
+        HashMap<String, String> tokenResponse = new HashMap<>();
+        tokenResponse.put("token", token);
+        return Response.successWithData(tokenResponse);
     }
 }
 
