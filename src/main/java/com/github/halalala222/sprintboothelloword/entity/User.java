@@ -2,6 +2,7 @@ package com.github.halalala222.sprintboothelloword.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,4 +32,24 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+
+    public static String getIdFiled() {
+        return "id";
+    }
+
+    public static String getNameFiled() {
+        return "name";
+    }
+
+    public static String getSignatureFiled() {
+        return "signature";
+    }
+
+    public static String getEmailFiled() {
+        return "email";
+    }
+
+    public static String getPasswordFiled() {
+        return "password";
+    }
 }
