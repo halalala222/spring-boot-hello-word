@@ -1,9 +1,13 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
+import com.github.halalala222.sprintboothelloword.service.UserService;
+import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
+import com.github.halalala222.sprintboothelloword.entity.User;
 import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,20 +24,28 @@ import java.util.Map;
 @RequestMapping("/login")
 public class Login {
     private final JwtUtils jwtUtils;
+    private final UserService userService;
 
-    public Login(JwtUtils jwtUtils) {
+    public Login(JwtUtils jwtUtils, UserService userService) {
         this.jwtUtils = jwtUtils;
+        this.userService = userService;
     }
 
     @PostMapping
-    public Response<Map<String, String>> LoginController(@RequestBody LoginUser user) throws BaseException {
-        if (user.getUserName() == null || user.getPassword() == null) {
+    public Response<Map<String, String>> LoginController(@RequestBody LoginUser loginUser) throws BaseException {
+        if (loginUser.getUserName() == null || loginUser.getPassword() == null) {
             throw new BaseException(ResponseCode.REQUEST_DATA_ERROR);
         }
-        if (!(user.getUserName().equals("liooooo") && user.getPassword().equals("admin"))) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(User.getNameFiled(), loginUser.getUserName());
+        User user = userService.getOne(queryWrapper);
+        if (user == null) {
             throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
         }
-        String token = jwtUtils.generateToken(1L);
+        if (!BcryptUtils.check(user.getPassword(), user.getPassword())) {
+            throw new BaseException(ResponseCode.USER_PASSWORD_ERROR);
+        }
+        String token = jwtUtils.generateToken(user.getId());
         HashMap<String, String> tokenResponse = new HashMap<>();
         tokenResponse.put("token", token);
         return Response.successWithData(tokenResponse);
