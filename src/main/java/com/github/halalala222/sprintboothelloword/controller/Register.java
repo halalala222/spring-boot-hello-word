@@ -8,7 +8,13 @@ import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.UserService;
 import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +41,7 @@ public class Register {
     }
 
     @PostMapping
-    public Response<Map<String, String>> userRegister(@RequestBody RegisterBody registerBody) throws BaseException {
+    public Response<Map<String, String>> userRegister(@Validated @RequestBody RegisterBody registerBody) throws BaseException {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq(User.getNameFiled(), registerBody.getUsername());
         User user = userService.getOne(userQueryWrapper);
@@ -58,6 +64,8 @@ public class Register {
 
 @Data
 class RegisterBody {
+    @NotEmpty(message = "username 不能为空")
     private String username;
+    @NotEmpty(message = "password 不能为空")
     private String password;
 }
