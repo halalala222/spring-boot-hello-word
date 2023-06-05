@@ -18,7 +18,8 @@ public enum ResponseCode {
     REQUEST_DATA_ERROR(1004, "请求参数错误"),
     USER_EXITED(1005, "用户名已经注册过"),
     USER_PASSWORD_ERROR(1006, "用户账号或密码错误"),
-    REQUEST_PARAM_ERROR(1007, "请求参数有误");
+    REQUEST_PARAM_ERROR(1007, "请求参数有误"),
+    PASSWORD_STRENGTH_ERROR(1008, "密码强度不够");
     private final int code;
     private String message;
 
