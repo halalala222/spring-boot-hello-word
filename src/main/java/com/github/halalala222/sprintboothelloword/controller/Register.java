@@ -7,6 +7,7 @@ import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.UserService;
 import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
+import com.github.halalala222.sprintboothelloword.utils.CheckPassword;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -42,6 +43,9 @@ public class Register {
         userQueryWrapper.eq(User.getNameFiled(), registerBody.getUsername());
         User user = userService.getOne(userQueryWrapper);
         if (user == null) {
+            if (!CheckPassword.check(registerBody.getPassword())) {
+                throw new BaseException(ResponseCode.PASSWORD_STRENGTH_ERROR);
+            }
             User newUser = User.builder().
                     name(registerBody.getUsername()).
                     password(BcryptUtils.encoded(registerBody.getPassword())).build();
@@ -54,6 +58,7 @@ public class Register {
             tokenResponse.put("token", token);
             return Response.successWithData(tokenResponse);
         }
+
         throw new BaseException(ResponseCode.USER_EXITED);
     }
 }
