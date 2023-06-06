@@ -1,7 +1,9 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.entity.User;
+import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.UserService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
@@ -35,12 +37,15 @@ public class UserController {
 
 
     @GetMapping("/profile")
-    public Response<Map<String, UserProfile>> getUserProfile(HttpServletRequest request) {
+    public Response<Map<String, UserProfile>> getUserProfile(HttpServletRequest request) throws BaseException {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(User.getIdFiled(), userId);
         User user = userService.getOne(queryWrapper);
         Map<String, UserProfile> responseData = new HashMap<>();
+        if (user == null) {
+            throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
+        }
         responseData.put("profile", new UserProfile(user.getName(), user.getId(), user.getSignature(), user.getEmail()));
         return Response.successWithData(responseData);
     }
