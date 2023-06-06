@@ -34,7 +34,7 @@ public class UserController {
     }
 
 
-    @GetMapping
+    @GetMapping("/profile")
     public Response<Map<String, UserProfile>> getUserProfile(HttpServletRequest request) {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
