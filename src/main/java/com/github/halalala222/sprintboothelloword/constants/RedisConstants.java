@@ -1,7 +1,5 @@
 package com.github.halalala222.sprintboothelloword.constants;
 
-import org.springframework.context.annotation.Configuration;
-
 /**
  * Created with IntelliJ IDEA.
  *
