@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,9 +31,11 @@ public class JwtUtils {
     private String secret;
 
     public String generateToken(Long id) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", id);
         return Jwts.
                 builder().
-                setId(id.toString()).
+                setClaims(claims).
                 setExpiration(new Date(System.currentTimeMillis() + expireTime * 1000L)).
                 signWith(SignatureAlgorithm.HS256, secret).
                 compact();
@@ -49,7 +53,7 @@ public class JwtUtils {
 
     public Long getUserIdFromToken(String token) {
         Claims claims = getTokenClaims(token);
-        return Long.getLong(claims.getId());
+        return Long.valueOf(claims.get("id").toString());
     }
 
     private Claims getTokenClaims(String token) {
