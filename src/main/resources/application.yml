@@ -4,6 +4,9 @@ server:
 spring:
   profiles:
     active: ${ENC:dev}
+logging:
+  level:
+    web: trace
 
 jwt:
   expire-time: 168
