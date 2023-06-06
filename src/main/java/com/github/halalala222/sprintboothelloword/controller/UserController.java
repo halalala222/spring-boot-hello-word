@@ -9,6 +9,8 @@ import com.github.halalala222.sprintboothelloword.service.UserService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +53,7 @@ public class UserController {
     }
 }
 
+@Getter
 @AllArgsConstructor
 class UserProfile {
     private String name;
