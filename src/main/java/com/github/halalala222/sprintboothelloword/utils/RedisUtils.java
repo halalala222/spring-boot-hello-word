@@ -30,4 +30,10 @@ public class RedisUtils {
             redisTemplate.opsForValue().set(key, value);
         }
     }
+
+    public void delete(String key) {
+        if (key != null) {
+            redisTemplate.delete(key);
+        }
+    }
 }
