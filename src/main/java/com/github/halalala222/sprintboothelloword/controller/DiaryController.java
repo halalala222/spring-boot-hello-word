@@ -25,7 +25,7 @@ import java.util.Map;
  * @version : 1.0
  */
 @RestController
-@RequestMapping("/diary")
+@RequestMapping("")
 public class DiaryController {
 
     private final DiaryService diaryService;
@@ -37,7 +37,7 @@ public class DiaryController {
         this.jwtUtils = jwtUtils;
     }
 
-    @PostMapping
+    @PostMapping("/diary")
     public Response<Void> createDiary(@RequestBody @Validated CreateDiary createDiary, HttpServletRequest request) throws BaseException {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
         Diary diary = Diary.builder().content(createDiary.getContent()).UserId(userId).build();
@@ -47,7 +47,7 @@ public class DiaryController {
         return Response.successWithoutData();
     }
 
-    @GetMapping
+    @GetMapping("/diaries")
     public Response<Map<String, List<Object>>> getAllDiaries() throws BaseException {
         List<Object> diaries = diaryService.listObjs(new LambdaQueryWrapper<Diary>().select(Diary::getContent));
         Map<String, List<Object>> responseData = new HashMap<>();
