@@ -39,7 +39,7 @@ public class DiaryController {
     public Response<Void> createDiary(@RequestBody @Validated CreateDiary createDiary, HttpServletRequest request) throws BaseException {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
         Diary diary = Diary.builder().content(createDiary.getContent()).UserId(userId).build();
-        if (diaryService.save(diary)) {
+        if (!diaryService.save(diary)) {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }
         return Response.successWithoutData();
