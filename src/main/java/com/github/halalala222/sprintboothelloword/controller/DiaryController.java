@@ -1,5 +1,6 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
@@ -11,10 +12,11 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,6 +45,14 @@ public class DiaryController {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }
         return Response.successWithoutData();
+    }
+
+    @GetMapping
+    public Response<Map<String, List<Object>>> getAllDiaries() throws BaseException {
+        List<Object> diaries = diaryService.listObjs(new LambdaQueryWrapper<Diary>().select(Diary::getContent));
+        Map<String, List<Object>> responseData = new HashMap<>();
+        responseData.put("diaries", diaries);
+        return Response.successWithData(responseData);
     }
 }
 
