@@ -48,9 +48,9 @@ public class DiaryController {
     }
 
     @GetMapping("/diaries")
-    public Response<Map<String, List<Object>>> getAllDiaries() throws BaseException {
-        List<Object> diaries = diaryService.listObjs(new LambdaQueryWrapper<Diary>().select(Diary::getContent));
-        Map<String, List<Object>> responseData = new HashMap<>();
+    public Response<Map<String, List<Diary>>> getAllDiaries() throws BaseException {
+        List<Diary> diaries = diaryService.list(new LambdaQueryWrapper<Diary>().select(Diary::getContent, Diary::getUserId));
+        Map<String, List<Diary>> responseData = new HashMap<>();
         responseData.put("diaries", diaries);
         return Response.successWithData(responseData);
     }
