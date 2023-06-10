@@ -13,5 +13,5 @@ import java.util.List;
  * @version : 1.0
  */
 public interface DiaryService extends IService<Diary> {
-    public List<DiaryDTO> getDiaries();
+    List<DiaryDTO> getDiaries();
 }
