@@ -1,6 +1,7 @@
 package com.github.halalala222.sprintboothelloword.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,15 +21,21 @@ import java.util.Date;
 @Builder
 @TableName("diary")
 public class Diary {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableId(type = IdType.AUTO)
     private Long id;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField("content")
     private String content;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField("user_id")
     private Long UserId;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(fill = FieldFill.INSERT, value = "created_at")
     private Date createdAt;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(fill = FieldFill.INSERT_UPDATE, value = "updated_at")
     private Date updatedAt;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date deletedAt;
 }
