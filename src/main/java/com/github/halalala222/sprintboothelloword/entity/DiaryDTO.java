@@ -1,6 +1,5 @@
 package com.github.halalala222.sprintboothelloword.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 /**
