@@ -18,6 +18,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-json'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.github.yulichang:mybatis-plus-join:1.4.5'
     implementation 'redis.clients:jedis:2.8.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.mindrot:jbcrypt:0.4'
