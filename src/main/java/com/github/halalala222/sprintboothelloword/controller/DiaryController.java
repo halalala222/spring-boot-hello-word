@@ -1,8 +1,8 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
+import com.github.halalala222.sprintboothelloword.entity.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.DiaryService;
@@ -48,9 +48,9 @@ public class DiaryController {
     }
 
     @GetMapping("/diaries")
-    public Response<Map<String, List<Diary>>> getAllDiaries() throws BaseException {
-        List<Diary> diaries = diaryService.list(new LambdaQueryWrapper<Diary>().select(Diary::getContent, Diary::getUserId));
-        Map<String, List<Diary>> responseData = new HashMap<>();
+    public Response<Map<String, List<DiaryDTO>>> getAllDiaries() throws BaseException {
+        List<DiaryDTO> diaries = diaryService.getDiaries();
+        Map<String, List<DiaryDTO>> responseData = new HashMap<>();
         responseData.put("diaries", diaries);
         return Response.successWithData(responseData);
     }
