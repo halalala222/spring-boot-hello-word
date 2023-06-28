@@ -24,7 +24,7 @@ import java.util.Date;
 public class UserDiaryLike {
     @TableField("user_id")
     Long userId;
-    @TableField("dairy_id")
+    @TableField("diary_id")
     Long diaryId;
     @TableField(fill = FieldFill.INSERT, value = "created_at")
     private Date createdAt;
