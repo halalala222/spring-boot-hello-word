@@ -1,16 +1,14 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.halalala222.sprintboothelloword.entity.UserDiaryLike;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.UserDiaryLikeService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.annotation.Validated;
@@ -50,7 +48,13 @@ public class UserDiaryLikeController {
             queryWrapper.
                     eq(UserDiaryLike::getUserId, userId).
                     eq(UserDiaryLike::getDiaryId, userLikeDiary.getDiaryId());
-            userDiaryLikeService.remove(queryWrapper);
+            UserDiaryLike data = userDiaryLikeService.getOne(queryWrapper);
+            if (data != null) {
+                userDiaryLikeService.remove(queryWrapper);
+            } else {
+                userDiaryLikeService.recoveryLogicDelete(userId, userLikeDiary.getDiaryId());
+            }
+
         }
 
         return Response.successWithoutData();
