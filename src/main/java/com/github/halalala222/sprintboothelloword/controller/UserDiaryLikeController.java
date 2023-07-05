@@ -16,9 +16,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
-import static com.github.halalala222.sprintboothelloword.constants.ResponseCode.SERVICE_ERROR;
-
 /**
  * Created with IntelliJ IDEA.
  *
