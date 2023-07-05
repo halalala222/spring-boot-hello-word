@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.halalala222.sprintboothelloword.entity.UserDiaryLike;
 import com.github.halalala222.sprintboothelloword.mapper.UserDiaryLikeMapper;
 import com.github.halalala222.sprintboothelloword.service.UserDiaryLikeService;
+import org.springframework.stereotype.Service;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,5 +12,6 @@ import com.github.halalala222.sprintboothelloword.service.UserDiaryLikeService;
  * @author : halalala222
  * @version : 1.0
  */
+@Service
 public class UserDiaryLikeImpl extends ServiceImpl<UserDiaryLikeMapper, UserDiaryLike> implements UserDiaryLikeService {
 }
