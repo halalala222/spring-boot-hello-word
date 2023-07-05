@@ -1,5 +1,6 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.halalala222.sprintboothelloword.entity.UserDiaryLike;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
@@ -11,8 +12,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 
 import static com.github.halalala222.sprintboothelloword.constants.ResponseCode.SERVICE_ERROR;
 
@@ -43,9 +46,16 @@ public class UserDiaryLikeController {
         UserDiaryLike userDiaryLike = UserDiaryLike.builder().
                 diaryId(userLikeDiary.getDiaryId()).
                 userId(userId).build();
-        if (!userDiaryLikeService.save(userDiaryLike)) {
-            throw new BaseException(SERVICE_ERROR);
+        try {
+            if (!userDiaryLikeService.save(userDiaryLike)) {
+                throw new BaseException(SERVICE_ERROR);
+            }
+        } catch (DuplicateKeyException e) {
+            LambdaQueryWrapper<UserDiaryLike> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(UserDiaryLike::getUserId, userId).eq(UserDiaryLike::getDiaryId, userLikeDiary.getDiaryId());
+            userDiaryLikeService.remove(queryWrapper);
         }
+
         return Response.successWithoutData();
     }
 }
