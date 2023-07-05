@@ -2,6 +2,7 @@ package com.github.halalala222.sprintboothelloword.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,5 +31,6 @@ public class UserDiaryLike {
     private Date createdAt;
     @TableField(fill = FieldFill.INSERT_UPDATE, value = "updated_at")
     private Date updatedAt;
+    @TableLogic
     private Date deletedAt;
 }
