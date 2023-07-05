@@ -11,7 +11,11 @@ logging:
 jwt:
   expire-time: 168
   secret: lioooo
-
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: NOW()
+      logic-not-delete-value: 'NULL'
 ---
 person:
   name: prod-liooooo
