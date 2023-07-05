@@ -47,12 +47,12 @@ public class UserDiaryLikeController {
                 diaryId(userLikeDiary.getDiaryId()).
                 userId(userId).build();
         try {
-            if (!userDiaryLikeService.save(userDiaryLike)) {
-                throw new BaseException(SERVICE_ERROR);
-            }
+            userDiaryLikeService.save(userDiaryLike);
         } catch (DuplicateKeyException e) {
             LambdaQueryWrapper<UserDiaryLike> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(UserDiaryLike::getUserId, userId).eq(UserDiaryLike::getDiaryId, userLikeDiary.getDiaryId());
+            queryWrapper.
+                    eq(UserDiaryLike::getUserId, userId).
+                    eq(UserDiaryLike::getDiaryId, userLikeDiary.getDiaryId());
             userDiaryLikeService.remove(queryWrapper);
         }
 
