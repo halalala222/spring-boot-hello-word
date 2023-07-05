@@ -14,4 +14,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserDiaryLikeImpl extends ServiceImpl<UserDiaryLikeMapper, UserDiaryLike> implements UserDiaryLikeService {
+
+    public void recoveryLogicDelete(Long userId, Long diaryId) {
+        this.baseMapper.recoverLogicDelete(userId, diaryId);
+    }
 }
