@@ -1,4 +1,4 @@
-package com.github.halalala222.sprintboothelloword.service;
+package com.github.halalala222.sprintboothelloword.dao;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.halalala222.sprintboothelloword.entity.User;

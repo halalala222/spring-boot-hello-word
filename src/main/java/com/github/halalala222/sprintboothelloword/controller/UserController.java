@@ -8,7 +8,7 @@ import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.entity.User;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
-import com.github.halalala222.sprintboothelloword.service.UserService;
+import com.github.halalala222.sprintboothelloword.dao.UserService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
 import jakarta.servlet.http.HttpServletRequest;

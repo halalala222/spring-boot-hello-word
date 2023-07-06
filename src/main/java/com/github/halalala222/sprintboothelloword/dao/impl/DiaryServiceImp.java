@@ -1,10 +1,10 @@
-package com.github.halalala222.sprintboothelloword.service.impl;
+package com.github.halalala222.sprintboothelloword.dao.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
 import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.mapper.DiaryMapper;
-import com.github.halalala222.sprintboothelloword.service.DiaryService;
+import com.github.halalala222.sprintboothelloword.dao.DiaryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

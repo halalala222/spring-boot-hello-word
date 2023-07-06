@@ -1,9 +1,9 @@
-package com.github.halalala222.sprintboothelloword.service.impl;
+package com.github.halalala222.sprintboothelloword.dao.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.halalala222.sprintboothelloword.entity.User;
 import com.github.halalala222.sprintboothelloword.mapper.UserMapper;
-import com.github.halalala222.sprintboothelloword.service.UserService;
+import com.github.halalala222.sprintboothelloword.dao.UserService;
 import org.springframework.stereotype.Service;
 
 /**
