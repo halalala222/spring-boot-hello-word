@@ -6,7 +6,7 @@ import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.UserLikeDiaryService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -52,6 +52,6 @@ public class UserDiaryLikeController {
 @NoArgsConstructor
 @Builder
 class UserLikeDiary {
-    @NotEmpty(message = "diaryId 不能为空")
+    @NotNull(message = "diaryId 不能为空")
     private Long diaryId;
 }
