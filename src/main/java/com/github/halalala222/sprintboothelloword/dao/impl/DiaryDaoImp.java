@@ -20,4 +20,9 @@ public class DiaryDaoImp extends ServiceImpl<DiaryMapper, Diary> implements Diar
     public List<DiaryDTO> getDiaries() {
         return this.baseMapper.getDiaries();
     }
+
+    @Override
+    public Long getDiaryCount(Long diaryId) {
+        return this.baseMapper.getDiaryCount(diaryId);
+    }
 }

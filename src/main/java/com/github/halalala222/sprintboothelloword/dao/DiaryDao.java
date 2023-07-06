@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface DiaryDao extends IService<Diary> {
     List<DiaryDTO> getDiaries();
+
+    Long getDiaryCount(Long diaryId);
 }
