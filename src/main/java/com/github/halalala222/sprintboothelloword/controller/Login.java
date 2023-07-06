@@ -1,10 +1,10 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.github.halalala222.sprintboothelloword.dao.UserDao;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
-import com.github.halalala222.sprintboothelloword.dao.UserService;
 import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import com.github.halalala222.sprintboothelloword.entity.User;
@@ -24,11 +24,11 @@ import java.util.Map;
 @RequestMapping("/login")
 public class Login {
     private final JwtUtils jwtUtils;
-    private final UserService userService;
+    private final UserDao userDao;
 
-    public Login(JwtUtils jwtUtils, UserService userService) {
+    public Login(JwtUtils jwtUtils, UserDao userDao) {
         this.jwtUtils = jwtUtils;
-        this.userService = userService;
+        this.userDao = userDao;
     }
 
     @PostMapping
@@ -38,7 +38,7 @@ public class Login {
         }
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getName, loginUser.getUserName());
-        User user = userService.getOne(queryWrapper);
+        User user = userDao.getOne(queryWrapper);
         if (user == null) {
             throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
         }

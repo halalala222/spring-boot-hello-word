@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.halalala222.sprintboothelloword.constants.RedisConstants;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
+import com.github.halalala222.sprintboothelloword.dao.UserDao;
 import com.github.halalala222.sprintboothelloword.entity.User;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
-import com.github.halalala222.sprintboothelloword.dao.UserService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,13 +34,13 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final JwtUtils jwtUtils;
-    private final UserService userService;
+    private final UserDao userDao;
     private final RedisUtils redisUtils;
 
     @Autowired
-    public UserController(JwtUtils jwtUtils, UserService userService, RedisUtils redisUtils) {
+    public UserController(JwtUtils jwtUtils, UserDao userDao, RedisUtils redisUtils) {
         this.jwtUtils = jwtUtils;
-        this.userService = userService;
+        this.userDao = userDao;
         this.redisUtils = redisUtils;
     }
 
@@ -54,7 +54,7 @@ public class UserController {
         if (userRedisProfile == null) {
             LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(User::getId, userId);
-            User user = userService.getOne(queryWrapper);
+            User user = userDao.getOne(queryWrapper);
             if (user == null) {
                 throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
             }
@@ -77,7 +77,7 @@ public class UserController {
         userUpdateWrapper.eq(User::getId, userId).
                 set(User::getName, updateUserProfile.getName()).
                 set(User::getSignature, updateUserProfile.getSignature());
-        boolean isUpdated = userService.update(userUpdateWrapper);
+        boolean isUpdated = userDao.update(userUpdateWrapper);
         if (!isUpdated) {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }

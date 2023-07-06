@@ -2,10 +2,10 @@ package com.github.halalala222.sprintboothelloword.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
+import com.github.halalala222.sprintboothelloword.dao.UserDao;
 import com.github.halalala222.sprintboothelloword.entity.User;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
-import com.github.halalala222.sprintboothelloword.dao.UserService;
 import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
 import com.github.halalala222.sprintboothelloword.utils.CheckPassword;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
@@ -29,11 +29,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/register")
 public class Register {
-    private final UserService userService;
+    private final UserDao userDao;
     private final JwtUtils jwtUtils;
 
-    public Register(UserService userService, JwtUtils jwtUtils) {
-        this.userService = userService;
+    public Register(UserDao userDao, JwtUtils jwtUtils) {
+        this.userDao = userDao;
         this.jwtUtils = jwtUtils;
     }
 
@@ -41,7 +41,7 @@ public class Register {
     public Response<Map<String, String>> userRegister(@Validated @RequestBody RegisterBody registerBody) throws BaseException {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getName, registerBody.getUsername());
-        User user = userService.getOne(queryWrapper);
+        User user = userDao.getOne(queryWrapper);
         if (user == null) {
             if (!CheckPassword.check(registerBody.getPassword())) {
                 throw new BaseException(ResponseCode.PASSWORD_STRENGTH_ERROR);
@@ -49,7 +49,7 @@ public class Register {
             User newUser = User.builder().
                     name(registerBody.getUsername()).
                     password(BcryptUtils.encoded(registerBody.getPassword())).build();
-            boolean isSave = userService.save(newUser);
+            boolean isSave = userDao.save(newUser);
             if (!isSave) {
                 throw new BaseException(ResponseCode.SERVICE_ERROR);
             }

@@ -10,6 +10,6 @@ import com.github.halalala222.sprintboothelloword.entity.UserDiaryLike;
  * @author : halalala222
  * @version : 1.0
  */
-public interface UserDiaryLikeService extends IService<UserDiaryLike> {
+public interface UserDiaryLikeDao extends IService<UserDiaryLike> {
     void recoveryLogicDelete(Long userId, Long diaryId);
 }

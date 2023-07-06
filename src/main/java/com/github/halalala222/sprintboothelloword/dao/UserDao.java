@@ -9,5 +9,5 @@ import com.github.halalala222.sprintboothelloword.entity.User;
  * @author : halalala222
  * @version : 1.0
  */
-public interface UserService extends IService<User> {
+public interface UserDao extends IService<User> {
 }

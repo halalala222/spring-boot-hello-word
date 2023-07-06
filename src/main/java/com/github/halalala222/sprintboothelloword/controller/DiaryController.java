@@ -5,7 +5,7 @@ import com.github.halalala222.sprintboothelloword.entity.Diary;
 import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
-import com.github.halalala222.sprintboothelloword.dao.DiaryService;
+import com.github.halalala222.sprintboothelloword.dao.DiaryDao;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotEmpty;
@@ -28,12 +28,12 @@ import java.util.Map;
 @RequestMapping("")
 public class DiaryController {
 
-    private final DiaryService diaryService;
+    private final DiaryDao diaryDao;
     private final JwtUtils jwtUtils;
 
     @Autowired
-    public DiaryController(DiaryService diaryService, JwtUtils jwtUtils) {
-        this.diaryService = diaryService;
+    public DiaryController(DiaryDao diaryDao, JwtUtils jwtUtils) {
+        this.diaryDao = diaryDao;
         this.jwtUtils = jwtUtils;
     }
 
@@ -41,7 +41,7 @@ public class DiaryController {
     public Response<Void> createDiary(@RequestBody @Validated CreateDiary createDiary, HttpServletRequest request) throws BaseException {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
         Diary diary = Diary.builder().content(createDiary.getContent()).UserId(userId).build();
-        if (!diaryService.save(diary)) {
+        if (!diaryDao.save(diary)) {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }
         return Response.successWithoutData();
@@ -49,7 +49,7 @@ public class DiaryController {
 
     @GetMapping("/diaries")
     public Response<Map<String, List<DiaryDTO>>> getAllDiaries() throws BaseException {
-        List<DiaryDTO> diaries = diaryService.getDiaries();
+        List<DiaryDTO> diaries = diaryDao.getDiaries();
         Map<String, List<DiaryDTO>> responseData = new HashMap<>();
         responseData.put("diaries", diaries);
         return Response.successWithData(responseData);

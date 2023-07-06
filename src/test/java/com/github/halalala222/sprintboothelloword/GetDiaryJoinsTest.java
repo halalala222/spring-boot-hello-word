@@ -2,7 +2,7 @@ package com.github.halalala222.sprintboothelloword;
 
 import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.mapper.DiaryMapper;
-import com.github.halalala222.sprintboothelloword.dao.DiaryService;
+import com.github.halalala222.sprintboothelloword.dao.DiaryDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +20,7 @@ public class GetDiaryJoinsTest {
     @Autowired
     private DiaryMapper diaryMapper;
     @Autowired
-    private DiaryService diaryService;
+    private DiaryDao diaryDao;
 
     @Test
     void TestGetDiaries() {
@@ -30,7 +30,7 @@ public class GetDiaryJoinsTest {
 
     @Test
     void TestService() {
-        List<DiaryDTO> diaryDTOList = diaryService.getDiaries();
+        List<DiaryDTO> diaryDTOList = diaryDao.getDiaries();
         diaryDTOList.forEach(System.out::println);
     }
 }
