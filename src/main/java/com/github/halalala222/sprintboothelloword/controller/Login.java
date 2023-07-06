@@ -8,7 +8,10 @@ import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import com.github.halalala222.sprintboothelloword.entity.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,7 +35,7 @@ public class Login {
     }
 
     @PostMapping
-    public Response<Map<String, String>> LoginController(@RequestBody LoginUser loginUser) throws BaseException {
+    public Response<Map<String, String>> LoginController(@RequestBody @Validated LoginUser loginUser) throws BaseException {
         if (loginUser.getUserName() == null || loginUser.getPassword() == null) {
             throw new BaseException(ResponseCode.REQUEST_DATA_ERROR);
         }
@@ -54,6 +57,8 @@ public class Login {
 
 @Data
 class LoginUser {
+    @NotBlank(message = "username 不能为空")
     private String userName;
+    @NotEmpty(message = "password 不能为空")
     private String password;
 }
