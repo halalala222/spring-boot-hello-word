@@ -12,6 +12,6 @@ import lombok.Data;
 public class DiaryDTO {
     private Long id;
     private String content;
-    private String UserName;
+    private String username;
     private Long count;
 }
