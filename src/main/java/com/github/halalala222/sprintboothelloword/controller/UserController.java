@@ -33,7 +33,7 @@ public class UserController {
     private final UserProfileService userProfileService;
 
     @Autowired
-    public UserController(JwtUtils jwtUtils, UserDao userDao, RedisUtils redisUtils, UserProfileService userProfileService) {
+    public UserController(JwtUtils jwtUtils, UserProfileService userProfileService) {
         this.jwtUtils = jwtUtils;
         this.userProfileService = userProfileService;
     }
