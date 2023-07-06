@@ -1,14 +1,10 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.halalala222.sprintboothelloword.constants.RedisConstants;
-import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.dao.UserDao;
-import com.github.halalala222.sprintboothelloword.entity.User;
+import com.github.halalala222.sprintboothelloword.dto.UserProfileDTO;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
+import com.github.halalala222.sprintboothelloword.service.UserProfileService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,67 +30,34 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final JwtUtils jwtUtils;
-    private final UserDao userDao;
-    private final RedisUtils redisUtils;
+    private final UserProfileService userProfileService;
 
     @Autowired
-    public UserController(JwtUtils jwtUtils, UserDao userDao, RedisUtils redisUtils) {
+    public UserController(JwtUtils jwtUtils, UserDao userDao, RedisUtils redisUtils, UserProfileService userProfileService) {
         this.jwtUtils = jwtUtils;
-        this.userDao = userDao;
-        this.redisUtils = redisUtils;
+        this.userProfileService = userProfileService;
     }
 
 
     @GetMapping("/profile")
-    public Response<Map<String, UserProfile>> getUserProfile(HttpServletRequest request) throws BaseException {
+    public Response<Map<String, UserProfileDTO>> getUserProfile(HttpServletRequest request) throws BaseException {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
-        Object userRedisProfile = redisUtils.get(RedisConstants.getFullKey(RedisConstants.USER_PROFILE_KEY_PREFIX, userId.toString()));
-        Map<String, UserProfile> responseData = new HashMap<>();
-
-        if (userRedisProfile == null) {
-            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(User::getId, userId);
-            User user = userDao.getOne(queryWrapper);
-            if (user == null) {
-                throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
-            }
-            UserProfile userProfile = new UserProfile(user.getName(), user.getId(), user.getSignature(), user.getEmail());
-            redisUtils.set(RedisConstants.getFullKey(RedisConstants.USER_PROFILE_KEY_PREFIX, userId.toString()), userProfile, RedisConstants.USER_PROFILE_TTL);
-            responseData.put("profile", userProfile);
-        } else {
-            ObjectMapper objectMapper = new ObjectMapper();
-            UserProfile userProfile = objectMapper.convertValue(userRedisProfile, UserProfile.class);
-            responseData.put("profile", userProfile);
-        }
-
+        UserProfileDTO userProfileDTO = userProfileService.getUserProfile(userId);
+        Map<String, UserProfileDTO> responseData = new HashMap<>();
+        responseData.put("profile", userProfileDTO);
         return Response.successWithData(responseData);
     }
 
     @PutMapping("/profile")
     public Response<Void> updateUserProfile(@RequestBody @Validated UpdateUserProfile updateUserProfile, HttpServletRequest request) throws BaseException {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
-        LambdaUpdateWrapper<User> userUpdateWrapper = new LambdaUpdateWrapper<>();
-        userUpdateWrapper.eq(User::getId, userId).
-                set(User::getName, updateUserProfile.getName()).
-                set(User::getSignature, updateUserProfile.getSignature());
-        boolean isUpdated = userDao.update(userUpdateWrapper);
-        if (!isUpdated) {
-            throw new BaseException(ResponseCode.SERVICE_ERROR);
-        }
-        redisUtils.delete(RedisConstants.getFullKey(RedisConstants.USER_PROFILE_KEY_PREFIX, userId.toString()));
+        userProfileService.updateUserProfile(UserProfileDTO.builder().
+                id(userId).
+                signature(updateUserProfile.getSignature()).
+                name(updateUserProfile.getName()).
+                build());
         return Response.successWithoutData();
     }
-}
-
-@Getter
-@AllArgsConstructor
-@Builder
-@NoArgsConstructor
-class UserProfile {
-    private String name;
-    private Long id;
-    private String signature;
-    private String email;
 }
 
 @Getter
