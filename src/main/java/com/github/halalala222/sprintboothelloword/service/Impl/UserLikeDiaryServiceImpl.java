@@ -34,7 +34,7 @@ public class UserLikeDiaryServiceImpl implements UserLikeDiaryService {
         } catch (DuplicateKeyException e) {
             LambdaQueryWrapper<UserDiaryLike> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.
-                    eq(UserDiaryLike::getUserId, userLikeDiaryDTO.getDiaryId()).
+                    eq(UserDiaryLike::getUserId, userLikeDiaryDTO.getUserId()).
                     eq(UserDiaryLike::getDiaryId, userLikeDiaryDTO.getDiaryId());
             UserDiaryLike data = userDiaryLikeDao.getOne(queryWrapper);
             if (data != null) {
