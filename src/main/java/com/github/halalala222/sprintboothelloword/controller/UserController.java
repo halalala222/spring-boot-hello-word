@@ -1,12 +1,10 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
-import com.github.halalala222.sprintboothelloword.dao.UserDao;
 import com.github.halalala222.sprintboothelloword.dto.UserProfileDTO;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.UserProfileService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
-import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
