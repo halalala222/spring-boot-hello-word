@@ -1,13 +1,10 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.github.halalala222.sprintboothelloword.dao.UserDao;
+import com.github.halalala222.sprintboothelloword.dto.LoginDTO;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
-import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
-import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
+import com.github.halalala222.sprintboothelloword.service.LoginService;
 import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
-import com.github.halalala222.sprintboothelloword.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -27,26 +24,18 @@ import java.util.Map;
 @RequestMapping("/login")
 public class Login {
     private final JwtUtils jwtUtils;
-    private final UserDao userDao;
+    private final LoginService loginService;
 
-    public Login(JwtUtils jwtUtils, UserDao userDao) {
+    public Login(JwtUtils jwtUtils, LoginService loginService) {
         this.jwtUtils = jwtUtils;
-        this.userDao = userDao;
+        this.loginService = loginService;
     }
 
     @PostMapping
     public Response<Map<String, String>> LoginController(@RequestBody @Validated LoginUser loginUser) throws BaseException {
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getName, loginUser.getUserName());
-        User user = userDao.getOne(queryWrapper);
-        if (user == null) {
-            throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
-        }
-        if (!BcryptUtils.check(user.getPassword(), user.getPassword())) {
-            throw new BaseException(ResponseCode.USER_PASSWORD_ERROR);
-        }
-        String token = jwtUtils.generateToken(user.getId());
+        Long userId = loginService.Login(new LoginDTO(loginUser.getUserName(), loginUser.getPassword()));
         HashMap<String, String> tokenResponse = new HashMap<>();
+        String token = jwtUtils.generateToken(userId);
         tokenResponse.put("token", token);
         return Response.successWithData(tokenResponse);
     }
