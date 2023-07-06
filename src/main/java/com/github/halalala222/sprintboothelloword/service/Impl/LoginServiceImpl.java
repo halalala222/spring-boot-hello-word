@@ -8,7 +8,6 @@ import com.github.halalala222.sprintboothelloword.entity.User;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.service.LoginService;
 import com.github.halalala222.sprintboothelloword.utils.BcryptUtils;
-import com.github.halalala222.sprintboothelloword.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
