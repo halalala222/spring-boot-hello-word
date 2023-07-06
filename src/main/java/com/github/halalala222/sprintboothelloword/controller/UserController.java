@@ -1,6 +1,6 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.halalala222.sprintboothelloword.constants.RedisConstants;
@@ -52,8 +52,8 @@ public class UserController {
         Map<String, UserProfile> responseData = new HashMap<>();
 
         if (userRedisProfile == null) {
-            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq(User.getIdFiled(), userId);
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(User::getId, userId);
             User user = userService.getOne(queryWrapper);
             if (user == null) {
                 throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);

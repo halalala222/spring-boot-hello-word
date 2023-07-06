@@ -1,8 +1,8 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.entity.User;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.service.UserService;
@@ -39,9 +39,9 @@ public class Register {
 
     @PostMapping
     public Response<Map<String, String>> userRegister(@Validated @RequestBody RegisterBody registerBody) throws BaseException {
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq(User.getNameFiled(), registerBody.getUsername());
-        User user = userService.getOne(userQueryWrapper);
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getName, registerBody.getUsername());
+        User user = userService.getOne(queryWrapper);
         if (user == null) {
             if (!CheckPassword.check(registerBody.getPassword())) {
                 throw new BaseException(ResponseCode.PASSWORD_STRENGTH_ERROR);

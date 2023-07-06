@@ -1,6 +1,6 @@
 package com.github.halalala222.sprintboothelloword.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.handler.Response;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
@@ -36,8 +36,8 @@ public class Login {
         if (loginUser.getUserName() == null || loginUser.getPassword() == null) {
             throw new BaseException(ResponseCode.REQUEST_DATA_ERROR);
         }
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(User.getNameFiled(), loginUser.getUserName());
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getName, loginUser.getUserName());
         User user = userService.getOne(queryWrapper);
         if (user == null) {
             throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);

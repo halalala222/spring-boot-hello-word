@@ -35,24 +35,4 @@ public class User {
     @TableField(fill = FieldFill.INSERT_UPDATE, value = "updated_at")
     private Date updatedAt;
     private Date deletedAt;
-
-    public static String getIdFiled() {
-        return "id";
-    }
-
-    public static String getNameFiled() {
-        return "name";
-    }
-
-    public static String getSignatureFiled() {
-        return "signature";
-    }
-
-    public static String getEmailFiled() {
-        return "email";
-    }
-
-    public static String getPasswordFiled() {
-        return "password";
-    }
 }
