@@ -1,6 +1,6 @@
 package com.github.halalala222.sprintboothelloword;
 
-import com.github.halalala222.sprintboothelloword.entity.DiaryDTO;
+import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.mapper.DiaryMapper;
 import com.github.halalala222.sprintboothelloword.service.DiaryService;
 import org.junit.jupiter.api.Test;

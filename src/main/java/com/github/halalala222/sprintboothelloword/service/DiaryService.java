@@ -2,7 +2,7 @@ package com.github.halalala222.sprintboothelloword.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
-import com.github.halalala222.sprintboothelloword.entity.DiaryDTO;
+import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 
 import java.util.List;
 

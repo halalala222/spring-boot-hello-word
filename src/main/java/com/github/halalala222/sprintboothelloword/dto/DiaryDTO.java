@@ -1,4 +1,4 @@
-package com.github.halalala222.sprintboothelloword.entity;
+package com.github.halalala222.sprintboothelloword.dto;
 
 import lombok.Data;
 

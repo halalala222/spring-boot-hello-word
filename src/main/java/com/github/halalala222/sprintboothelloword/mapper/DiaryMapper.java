@@ -2,7 +2,7 @@ package com.github.halalala222.sprintboothelloword.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
-import com.github.halalala222.sprintboothelloword.entity.DiaryDTO;
+import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
