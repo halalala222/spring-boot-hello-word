@@ -23,3 +23,4 @@ from read config -> http response -> log -> jwt -> orm -> cache
 # todo
 
 * mybatis & redis to build a simple web server
+* refactor project structure to add service layer & refactor dao layer
