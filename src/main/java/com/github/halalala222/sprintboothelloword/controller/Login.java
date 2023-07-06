@@ -33,7 +33,7 @@ public class Login {
 
     @PostMapping
     public Response<Map<String, String>> LoginController(@RequestBody @Validated LoginUser loginUser) throws BaseException {
-        Long userId = loginService.login(new LoginDTO(loginUser.getUserName(), loginUser.getPassword()));
+        Long userId = loginService.login(new LoginDTO(loginUser.getUsername(), loginUser.getPassword()));
         HashMap<String, String> tokenResponse = new HashMap<>();
         String token = jwtUtils.generateToken(userId);
         tokenResponse.put("token", token);
@@ -44,7 +44,7 @@ public class Login {
 @Data
 class LoginUser {
     @NotBlank(message = "username 不能为空")
-    private String userName;
+    private String username;
     @NotEmpty(message = "password 不能为空")
     private String password;
 }
