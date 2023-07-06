@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +36,10 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<DiaryDTO> getAllDiaries() {
-        return diaryDao.getDiaries();
+        return diaryDao.getDiaries().stream().peek((diaryDTO) -> {
+            Long likeCount = diaryDao.getDiaryCount(diaryDTO.getId());
+            diaryDTO.setCount(likeCount);
+        }).collect(Collectors.toList());
+
     }
 }
