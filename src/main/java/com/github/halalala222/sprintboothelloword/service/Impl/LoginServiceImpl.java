@@ -23,7 +23,7 @@ public class LoginServiceImpl implements LoginService {
     private final UserDao userDao;
 
     @Autowired
-    public LoginServiceImpl(UserDao userDao, JwtUtils jwtUtils) {
+    public LoginServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
