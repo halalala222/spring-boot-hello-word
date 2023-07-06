@@ -34,7 +34,7 @@ public class LoginServiceImpl implements LoginService {
         if (user == null) {
             throw new BaseException(ResponseCode.USER_NOT_FOUND_ERROR);
         }
-        if (!BcryptUtils.check(user.getPassword(), user.getPassword())) {
+        if (!BcryptUtils.check(loginDTO.getPassword(), user.getPassword())) {
             throw new BaseException(ResponseCode.USER_PASSWORD_ERROR);
         }
         return user.getId();
