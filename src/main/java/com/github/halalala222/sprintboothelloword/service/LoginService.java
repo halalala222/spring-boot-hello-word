@@ -9,5 +9,5 @@ import com.github.halalala222.sprintboothelloword.dto.LoginDTO;
  * @version : 1.0
  */
 public interface LoginService {
-    Long Login(LoginDTO loginDTO);
+    Long login(LoginDTO loginDTO);
 }

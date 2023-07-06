@@ -27,7 +27,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public Long Login(LoginDTO loginDTO) throws BaseException {
+    public Long login(LoginDTO loginDTO) throws BaseException {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getName, loginDTO.getUserName());
         User user = userDao.getOne(queryWrapper);

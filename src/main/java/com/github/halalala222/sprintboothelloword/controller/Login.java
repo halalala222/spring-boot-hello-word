@@ -33,7 +33,7 @@ public class Login {
 
     @PostMapping
     public Response<Map<String, String>> LoginController(@RequestBody @Validated LoginUser loginUser) throws BaseException {
-        Long userId = loginService.Login(new LoginDTO(loginUser.getUserName(), loginUser.getPassword()));
+        Long userId = loginService.login(new LoginDTO(loginUser.getUserName(), loginUser.getPassword()));
         HashMap<String, String> tokenResponse = new HashMap<>();
         String token = jwtUtils.generateToken(userId);
         tokenResponse.put("token", token);
