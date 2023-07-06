@@ -4,9 +4,6 @@ server:
 spring:
   profiles:
     active: ${ENC:dev}
-logging:
-  level:
-    web: trace
 
 jwt:
   expire-time: 168
@@ -65,6 +62,14 @@ spring:
 ---
 person:
   name: test-liooooo
+
+logging:
+  level:
+    web: trace
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 spring:
   config:
