@@ -36,9 +36,6 @@ public class Login {
 
     @PostMapping
     public Response<Map<String, String>> LoginController(@RequestBody @Validated LoginUser loginUser) throws BaseException {
-        if (loginUser.getUserName() == null || loginUser.getPassword() == null) {
-            throw new BaseException(ResponseCode.REQUEST_DATA_ERROR);
-        }
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getName, loginUser.getUserName());
         User user = userDao.getOne(queryWrapper);
