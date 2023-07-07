@@ -1,11 +1,15 @@
 package com.github.halalala222.sprintboothelloword.service.Impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.halalala222.sprintboothelloword.constants.RedisConstants;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.dao.DiaryDao;
 import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.service.DiaryService;
+import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +26,12 @@ import java.util.stream.Collectors;
 public class DiaryServiceImpl implements DiaryService {
     private final DiaryDao diaryDao;
 
+    private final RedisUtils redisUtils;
+
     @Autowired
-    public DiaryServiceImpl(DiaryDao diaryDao) {
+    public DiaryServiceImpl(DiaryDao diaryDao, RedisUtils redisUtils) {
         this.diaryDao = diaryDao;
+        this.redisUtils = redisUtils;
     }
 
     @Override
@@ -36,10 +43,32 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<DiaryDTO> getAllDiaries() {
-        return diaryDao.getDiaries().stream().peek((diaryDTO) -> {
+        Object diaries = redisUtils.get(
+                RedisConstants.getFullKey(
+                        RedisConstants.DIARIES_KEY_PREFIX, null
+                )
+        );
+        List<DiaryDTO> diaryDTOS;
+        if (diaries != null) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            TypeReference<List<DiaryDTO>> typeReference = new TypeReference<>() {
+            };
+            return objectMapper.convertValue(diaries, typeReference);
+        }
+        diaryDTOS = diaryDao.getDiaries().stream().peek((diaryDTO) -> {
             Long likeCount = diaryDao.getDiaryCount(diaryDTO.getId());
             diaryDTO.setCount(likeCount);
         }).collect(Collectors.toList());
+
+        redisUtils.set(
+                RedisConstants.getFullKey(
+                        RedisConstants.DIARIES_KEY_PREFIX,
+                        null
+                ),
+                diaryDTOS,
+                RedisConstants.DIARIES_TTL
+        );
+        return diaryDTOS;
 
     }
 }
