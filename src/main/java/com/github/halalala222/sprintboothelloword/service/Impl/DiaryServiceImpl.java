@@ -1,5 +1,6 @@
 package com.github.halalala222.sprintboothelloword.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,6 +89,21 @@ public class DiaryServiceImpl implements DiaryService {
                 eq(Diary::getUserId, diary.getUserId()).
                 set(Diary::getContent, diary.getContent());
         diaryDao.update(updateWrapper);
+        redisUtils.delete(
+                RedisConstants.getFullKey(
+                        RedisConstants.DIARIES_KEY_PREFIX,
+                        null
+                )
+        );
+    }
+
+    @Override
+    public void deleteDiary(Diary diary) {
+        LambdaQueryWrapper<Diary> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.
+                eq(Diary::getId, diary.getId()).
+                eq(Diary::getUserId, diary.getUserId());
+        diaryDao.remove(queryWrapper);
         redisUtils.delete(
                 RedisConstants.getFullKey(
                         RedisConstants.DIARIES_KEY_PREFIX,

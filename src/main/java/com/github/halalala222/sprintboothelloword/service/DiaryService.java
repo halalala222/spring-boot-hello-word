@@ -17,4 +17,6 @@ public interface DiaryService {
     List<DiaryDTO> getAllDiaries();
 
     void updateDiary(Diary diary);
+
+    void deleteDiary(Diary diary);
 }
