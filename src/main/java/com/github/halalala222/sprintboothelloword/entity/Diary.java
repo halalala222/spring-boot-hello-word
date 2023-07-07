@@ -37,5 +37,6 @@ public class Diary {
     @TableField(fill = FieldFill.INSERT_UPDATE, value = "updated_at")
     private Date updatedAt;
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @TableLogic
     private Date deletedAt;
 }
