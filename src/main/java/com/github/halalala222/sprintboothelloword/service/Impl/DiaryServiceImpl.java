@@ -58,22 +58,24 @@ public class DiaryServiceImpl implements DiaryService {
             ObjectMapper objectMapper = new ObjectMapper();
             TypeReference<List<DiaryDTO>> typeReference = new TypeReference<>() {
             };
-            return objectMapper.convertValue(diaries, typeReference);
+            diaryDTOS = objectMapper.convertValue(diaries, typeReference);
+        } else {
+            diaryDTOS = diaryDao.getDiaries();
+
+            redisUtils.set(
+                    RedisConstants.getFullKey(
+                            RedisConstants.DIARIES_KEY_PREFIX,
+                            null
+                    ),
+                    diaryDTOS,
+                    RedisConstants.DIARIES_TTL
+            );
         }
-        diaryDTOS = diaryDao.getDiaries().stream().peek((diaryDTO) -> {
+
+        return diaryDTOS.stream().peek((diaryDTO) -> {
             Long likeCount = diaryDao.getDiaryCount(diaryDTO.getId());
             diaryDTO.setCount(likeCount);
         }).collect(Collectors.toList());
-
-        redisUtils.set(
-                RedisConstants.getFullKey(
-                        RedisConstants.DIARIES_KEY_PREFIX,
-                        null
-                ),
-                diaryDTOS,
-                RedisConstants.DIARIES_TTL
-        );
-        return diaryDTOS;
 
     }
 }
