@@ -9,6 +9,7 @@ import com.github.halalala222.sprintboothelloword.dao.UserDao;
 import com.github.halalala222.sprintboothelloword.dto.UserProfileDTO;
 import com.github.halalala222.sprintboothelloword.entity.User;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
+import com.github.halalala222.sprintboothelloword.redis.redisKeyImpl.GetDiariesKey;
 import com.github.halalala222.sprintboothelloword.service.UserProfileService;
 import com.github.halalala222.sprintboothelloword.redis.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +26,19 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final RedisUtils redisUtils;
     private final UserDao userDao;
 
+    private final GetDiariesKey getDiariesKey;
+
     @Autowired
-    public UserProfileServiceImpl(RedisUtils redisUtils, UserDao userDao) {
+    public UserProfileServiceImpl(RedisUtils redisUtils, UserDao userDao, GetDiariesKey getDiariesKey) {
         this.redisUtils = redisUtils;
         this.userDao = userDao;
+        this.getDiariesKey = getDiariesKey;
     }
 
     @Override
     public UserProfileDTO getUserProfile(Long userId) throws BaseException {
         Object userRedisProfile = redisUtils.get(
-                RedisConstants.getFullKey(
-                        RedisConstants.USER_PROFILE_KEY_PREFIX,
-                        userId.toString()
-                )
+                getDiariesKey.getUniqueKey(userId)
         );
         UserProfileDTO userProfile;
         if (userRedisProfile != null) {
@@ -53,7 +54,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
         userProfile = new UserProfileDTO(user.getName(), user.getId(), user.getSignature(), user.getEmail());
         redisUtils.set(
-                RedisConstants.getFullKey(RedisConstants.USER_PROFILE_KEY_PREFIX, userId.toString()),
+                getDiariesKey.getUniqueKey(user.getId()),
                 userProfile,
                 RedisConstants.USER_PROFILE_TTL
         );
@@ -71,10 +72,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }
         redisUtils.delete(
-                RedisConstants.getFullKey(
-                        RedisConstants.USER_PROFILE_KEY_PREFIX,
-                        userProfileDTO.getId().toString()
-                )
+                getDiariesKey.getUniqueKey(userProfileDTO.getId())
         );
     }
 }
