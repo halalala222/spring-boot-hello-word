@@ -68,6 +68,16 @@ public class DiaryController {
         );
         return Response.successWithoutData();
     }
+
+    @DeleteMapping("/diary/{id}")
+    public Response<Void> deleteDiary(@PathVariable long id, HttpServletRequest request) {
+        Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
+        diaryService.deleteDiary(Diary.builder().
+                id(id).
+                UserId(userId).
+                build());
+        return Response.successWithoutData();
+    }
 }
 
 @Getter
