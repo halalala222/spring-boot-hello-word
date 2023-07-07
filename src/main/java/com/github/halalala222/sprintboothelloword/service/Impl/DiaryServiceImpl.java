@@ -7,13 +7,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.halalala222.sprintboothelloword.constants.RedisConstants;
 import com.github.halalala222.sprintboothelloword.constants.ResponseCode;
 import com.github.halalala222.sprintboothelloword.dao.DiaryDao;
+import com.github.halalala222.sprintboothelloword.dao.UserDiaryLikeDao;
 import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
+import com.github.halalala222.sprintboothelloword.entity.UserDiaryLike;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.service.DiaryService;
 import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,10 +33,17 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final RedisUtils redisUtils;
 
+    private final UserDiaryLikeDao userDiaryLikeDao;
+
     @Autowired
-    public DiaryServiceImpl(DiaryDao diaryDao, RedisUtils redisUtils) {
+    public DiaryServiceImpl(
+            DiaryDao diaryDao,
+            RedisUtils redisUtils,
+            UserDiaryLikeDao userDiaryLikeDao
+    ) {
         this.diaryDao = diaryDao;
         this.redisUtils = redisUtils;
+        this.userDiaryLikeDao = userDiaryLikeDao;
     }
 
     @Override
@@ -98,12 +108,18 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteDiary(Diary diary) {
         LambdaQueryWrapper<Diary> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.
                 eq(Diary::getId, diary.getId()).
                 eq(Diary::getUserId, diary.getUserId());
         diaryDao.remove(queryWrapper);
+        LambdaQueryWrapper<UserDiaryLike> userDiaryLikeLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userDiaryLikeLambdaQueryWrapper.
+                eq(UserDiaryLike::getDiaryId, diary.getId()).
+                eq(UserDiaryLike::getUserId, diary.getUserId());
+        userDiaryLikeDao.remove(userDiaryLikeLambdaQueryWrapper);
         redisUtils.delete(
                 RedisConstants.getFullKey(
                         RedisConstants.DIARIES_KEY_PREFIX,
