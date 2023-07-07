@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -71,5 +73,15 @@ public class GlobalExceptionHandler {
         ).toList();
         String unValidMessage = collect.toString();
         return Response.errorWithCode(ResponseCode.REQUEST_PARAM_ERROR.getResponseCodeSetMessage(unValidMessage.substring(1, unValidMessage.length() - 1)));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public <T> Response<T> info(HttpMessageNotReadableException e) {
+        log.info("[http message not readable : ]", e);
+        return Response.errorWithCode(
+                ResponseCode.REQUEST_PARAM_ERROR
+        );
     }
 }
