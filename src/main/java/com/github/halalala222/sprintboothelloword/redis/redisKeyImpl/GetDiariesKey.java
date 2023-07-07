@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class GetDiariesKey implements RedisKey {
     @Override
-    public String getKey() {
+    public String getUniqueKey(Object unique) {
         return RedisConstants.getFullKey(
                 RedisConstants.DIARIES_KEY_PREFIX,
-                null
+                unique
         );
     }
 }
