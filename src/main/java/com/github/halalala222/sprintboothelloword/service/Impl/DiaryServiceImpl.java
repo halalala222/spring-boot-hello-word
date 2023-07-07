@@ -1,5 +1,6 @@
 package com.github.halalala222.sprintboothelloword.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.halalala222.sprintboothelloword.constants.RedisConstants;
@@ -77,5 +78,21 @@ public class DiaryServiceImpl implements DiaryService {
             diaryDTO.setCount(likeCount);
         }).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public void updateDiary(Diary diary) {
+        LambdaUpdateWrapper<Diary> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.
+                eq(Diary::getId, diary.getId()).
+                eq(Diary::getUserId, diary.getUserId()).
+                set(Diary::getContent, diary.getContent());
+        diaryDao.update(updateWrapper);
+        redisUtils.delete(
+                RedisConstants.getFullKey(
+                        RedisConstants.DIARIES_KEY_PREFIX,
+                        null
+                )
+        );
     }
 }

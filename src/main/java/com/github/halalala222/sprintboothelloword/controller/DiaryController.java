@@ -51,6 +51,23 @@ public class DiaryController {
         responseData.put("diaries", diaries);
         return Response.successWithData(responseData);
     }
+
+    @PutMapping("/diary")
+    public Response<Void> updateDiary(
+            @RequestParam long id,
+            @RequestBody @Validated UpdateDiary updateDiary,
+            HttpServletRequest request
+    ) {
+        Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
+        diaryService.updateDiary(
+                Diary.builder().
+                        id(id).
+                        UserId(userId).
+                        content(updateDiary.getContent()).
+                        build()
+        );
+        return Response.successWithoutData();
+    }
 }
 
 @Getter
@@ -58,6 +75,15 @@ public class DiaryController {
 @Builder
 @NoArgsConstructor
 class CreateDiary {
+    @NotEmpty(message = "content 不能为空")
+    private String content;
+}
+
+@Getter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+class UpdateDiary {
     @NotEmpty(message = "content 不能为空")
     private String content;
 }
