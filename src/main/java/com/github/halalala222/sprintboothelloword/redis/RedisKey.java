@@ -7,5 +7,5 @@ package com.github.halalala222.sprintboothelloword.redis;
  * @version : 1.0
  */
 public interface RedisKey {
-    String getKey(String prefix, Object... unique);
+    String getKey();
 }
