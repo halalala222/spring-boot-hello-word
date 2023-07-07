@@ -29,7 +29,7 @@ public class Diary {
     private String content;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField("user_id")
-    private Long UserId;
+    private Long userId;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @TableField(fill = FieldFill.INSERT, value = "created_at")
     private Date createdAt;

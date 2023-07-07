@@ -39,7 +39,7 @@ public class DiaryController {
     @PostMapping("/diary")
     public Response<Void> createDiary(@RequestBody @Validated CreateDiary createDiary, HttpServletRequest request) throws BaseException {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
-        Diary diary = Diary.builder().content(createDiary.getContent()).UserId(userId).build();
+        Diary diary = Diary.builder().content(createDiary.getContent()).userId(userId).build();
         diaryService.createDiary(diary);
         return Response.successWithoutData();
     }
@@ -62,7 +62,7 @@ public class DiaryController {
         diaryService.updateDiary(
                 Diary.builder().
                         id(id).
-                        UserId(userId).
+                        userId(userId).
                         content(updateDiary.getContent()).
                         build()
         );
@@ -74,7 +74,7 @@ public class DiaryController {
         Long userId = jwtUtils.getUserIdFromToken(jwtUtils.getTokenFromRequestHeader(request));
         diaryService.deleteDiary(Diary.builder().
                 id(id).
-                UserId(userId).
+                userId(userId).
                 build());
         return Response.successWithoutData();
     }
