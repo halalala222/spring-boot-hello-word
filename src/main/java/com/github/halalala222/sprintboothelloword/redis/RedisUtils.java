@@ -1,4 +1,4 @@
-package com.github.halalala222.sprintboothelloword.utils;
+package com.github.halalala222.sprintboothelloword.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;

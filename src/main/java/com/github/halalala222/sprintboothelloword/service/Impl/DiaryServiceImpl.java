@@ -13,7 +13,7 @@ import com.github.halalala222.sprintboothelloword.entity.Diary;
 import com.github.halalala222.sprintboothelloword.entity.UserDiaryLike;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.service.DiaryService;
-import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
+import com.github.halalala222.sprintboothelloword.redis.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

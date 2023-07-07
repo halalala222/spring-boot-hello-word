@@ -10,7 +10,7 @@ import com.github.halalala222.sprintboothelloword.dto.UserProfileDTO;
 import com.github.halalala222.sprintboothelloword.entity.User;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
 import com.github.halalala222.sprintboothelloword.service.UserProfileService;
-import com.github.halalala222.sprintboothelloword.utils.RedisUtils;
+import com.github.halalala222.sprintboothelloword.redis.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
