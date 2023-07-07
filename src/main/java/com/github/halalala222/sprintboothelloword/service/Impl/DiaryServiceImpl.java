@@ -12,6 +12,7 @@ import com.github.halalala222.sprintboothelloword.dto.DiaryDTO;
 import com.github.halalala222.sprintboothelloword.entity.Diary;
 import com.github.halalala222.sprintboothelloword.entity.UserDiaryLike;
 import com.github.halalala222.sprintboothelloword.exception.BaseException;
+import com.github.halalala222.sprintboothelloword.redis.redisKeyImpl.GetDiariesKey;
 import com.github.halalala222.sprintboothelloword.service.DiaryService;
 import com.github.halalala222.sprintboothelloword.redis.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,18 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final UserDiaryLikeDao userDiaryLikeDao;
 
+    private final GetDiariesKey redisKey;
+
     @Autowired
     public DiaryServiceImpl(
             DiaryDao diaryDao,
             RedisUtils redisUtils,
-            UserDiaryLikeDao userDiaryLikeDao
-    ) {
+            UserDiaryLikeDao userDiaryLikeDao,
+            GetDiariesKey redisKey) {
         this.diaryDao = diaryDao;
         this.redisUtils = redisUtils;
         this.userDiaryLikeDao = userDiaryLikeDao;
+        this.redisKey = redisKey;
     }
 
     @Override
@@ -51,19 +55,13 @@ public class DiaryServiceImpl implements DiaryService {
         if (!diaryDao.save(diary)) {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }
-        redisUtils.delete(
-                RedisConstants.getFullKey(
-                        RedisConstants.DIARIES_KEY_PREFIX,
-                        null
-                ));
+        redisUtils.delete(redisKey.getKey());
     }
 
     @Override
     public List<DiaryDTO> getAllDiaries() {
         Object diaries = redisUtils.get(
-                RedisConstants.getFullKey(
-                        RedisConstants.DIARIES_KEY_PREFIX, null
-                )
+                redisKey.getKey()
         );
         List<DiaryDTO> diaryDTOS;
         if (diaries != null) {
@@ -75,10 +73,7 @@ public class DiaryServiceImpl implements DiaryService {
             diaryDTOS = diaryDao.getDiaries();
 
             redisUtils.set(
-                    RedisConstants.getFullKey(
-                            RedisConstants.DIARIES_KEY_PREFIX,
-                            null
-                    ),
+                    redisKey.getKey(),
                     diaryDTOS,
                     RedisConstants.DIARIES_TTL
             );
@@ -100,10 +95,7 @@ public class DiaryServiceImpl implements DiaryService {
                 set(Diary::getContent, diary.getContent());
         diaryDao.update(updateWrapper);
         redisUtils.delete(
-                RedisConstants.getFullKey(
-                        RedisConstants.DIARIES_KEY_PREFIX,
-                        null
-                )
+                redisKey.getKey()
         );
     }
 
@@ -121,10 +113,7 @@ public class DiaryServiceImpl implements DiaryService {
                 eq(UserDiaryLike::getUserId, diary.getUserId());
         userDiaryLikeDao.remove(userDiaryLikeLambdaQueryWrapper);
         redisUtils.delete(
-                RedisConstants.getFullKey(
-                        RedisConstants.DIARIES_KEY_PREFIX,
-                        null
-                )
+                redisKey.getKey()
         );
     }
 }
