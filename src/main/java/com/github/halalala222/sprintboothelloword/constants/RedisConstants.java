@@ -15,7 +15,7 @@ public class RedisConstants {
 
     public static long DIARIES_TTL = 60 * 60 * 5;
 
-    public static String getFullKey(String key, String unique) {
+    public static String getFullKey(String key, Object unique) {
         if (unique == null) {
             return BASIC_PREFIX + "-" + key;
         }
