@@ -55,13 +55,13 @@ public class DiaryServiceImpl implements DiaryService {
         if (!diaryDao.save(diary)) {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }
-        redisUtils.delete(redisKey.getKey());
+        redisUtils.delete(redisKey.getUniqueKey(null));
     }
 
     @Override
     public List<DiaryDTO> getAllDiaries() {
         Object diaries = redisUtils.get(
-                redisKey.getKey()
+                redisKey.getUniqueKey(null)
         );
         List<DiaryDTO> diaryDTOS;
         if (diaries != null) {
@@ -73,7 +73,7 @@ public class DiaryServiceImpl implements DiaryService {
             diaryDTOS = diaryDao.getDiaries();
 
             redisUtils.set(
-                    redisKey.getKey(),
+                    redisKey.getUniqueKey(null),
                     diaryDTOS,
                     RedisConstants.DIARIES_TTL
             );
@@ -95,7 +95,7 @@ public class DiaryServiceImpl implements DiaryService {
                 set(Diary::getContent, diary.getContent());
         diaryDao.update(updateWrapper);
         redisUtils.delete(
-                redisKey.getKey()
+                redisKey.getUniqueKey(null)
         );
     }
 
@@ -113,7 +113,7 @@ public class DiaryServiceImpl implements DiaryService {
                 eq(UserDiaryLike::getUserId, diary.getUserId());
         userDiaryLikeDao.remove(userDiaryLikeLambdaQueryWrapper);
         redisUtils.delete(
-                redisKey.getKey()
+                redisKey.getUniqueKey(null)
         );
     }
 }
