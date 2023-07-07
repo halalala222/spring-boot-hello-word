@@ -52,9 +52,9 @@ public class DiaryController {
         return Response.successWithData(responseData);
     }
 
-    @PutMapping("/diary")
+    @PutMapping("/diary/{id}")
     public Response<Void> updateDiary(
-            @RequestParam long id,
+            @PathVariable long id,
             @RequestBody @Validated UpdateDiary updateDiary,
             HttpServletRequest request
     ) {
