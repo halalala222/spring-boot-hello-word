@@ -39,6 +39,11 @@ public class DiaryServiceImpl implements DiaryService {
         if (!diaryDao.save(diary)) {
             throw new BaseException(ResponseCode.SERVICE_ERROR);
         }
+        redisUtils.delete(
+                RedisConstants.getFullKey(
+                        RedisConstants.DIARIES_KEY_PREFIX,
+                        null
+                ));
     }
 
     @Override
